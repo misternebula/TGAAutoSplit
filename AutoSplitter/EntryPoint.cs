@@ -25,7 +25,15 @@ namespace AutoSplitter
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             var ipAddress = IPAddress.Parse("127.0.0.1");
             var endPoint = new IPEndPoint(ipAddress, 16834);
-            socket.Connect(endPoint);
+
+            try
+            {
+				socket.Connect(endPoint);
+			}
+            catch
+            {
+                return;
+            }
 
             var gm = new GameObject("AUTO SPLITTER");
             gm.AddComponent<AutoSplitterMod>();
