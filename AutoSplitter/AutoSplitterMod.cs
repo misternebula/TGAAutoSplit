@@ -23,7 +23,7 @@ namespace AutoSplitter
 
 		public void Update()
 		{
-			#region FNAF 4
+			/*#region FNAF 4
 			if (FindObjectOfType<nBB_AI1>() != null)
 			{
 				FindObjectOfType<nBB_AI1>().flashed = true;
@@ -124,7 +124,7 @@ namespace AutoSplitter
 				FindObjectOfType<MoltenFreddy_AI>().enabled = false;
 				FindObjectOfType<MoltenFreddy_AI>().stade = 0;
 			}
-			#endregion
+			#endregion*/
 
 			if (SceneManager.GetActiveScene().name == "Main Menu")
 			{
