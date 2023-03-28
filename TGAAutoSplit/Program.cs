@@ -26,30 +26,48 @@ internal class Program
 
 		Console.WriteLine($"Copying AutoSplitter mod to game folder...");
 
-		if (!File.Exists(Path.Combine(managedFolder, "AutoSplitter.dll")))
+		try
 		{
-			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "AutoSplitter.dll"), Path.Combine(managedFolder, "AutoSplitter.dll"));
+			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "AutoSplitter.dll"), Path.Combine(managedFolder, "AutoSplitter.dll"), true);
+			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "AutoSplitter.pdb"), Path.Combine(managedFolder, "AutoSplitter.pdb"), true);
+		}
+		catch (IOException ex)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine($"- Failed to install mod. (The game is probably running?) : {ex.Message}");
+			Console.ResetColor();
+			Console.WriteLine($"Press any key to exit.");
+			Console.ReadKey();
+			return;
 		}
 
-		if (!File.Exists(Path.Combine(managedFolder, "AutoSplitter.pdb")))
-		{
-			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "AutoSplitter.pdb"), Path.Combine(managedFolder, "AutoSplitter.pdb"));
-		}
+		Console.ForegroundColor = ConsoleColor.Green;
+		Console.WriteLine("- Done.");
+		Console.ResetColor();
 
 		Console.WriteLine($"Installing LiveSplit.Server...");
 
 		var livesplitFolder = Directory.GetParent(configFile.LivesplitExePath);
 		var componentsFolder = Path.Combine(livesplitFolder.ToString(), "Components");
 
-		if (!File.Exists(Path.Combine(componentsFolder, "LiveSplit.Server.dll")))
+		try
 		{
-			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "LiveSplit.Server/LiveSplit.Server.dll"), Path.Combine(componentsFolder, "LiveSplit.Server.dll"));
+			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "LiveSplit.Server/LiveSplit.Server.dll"), Path.Combine(componentsFolder, "LiveSplit.Server.dll"), true);
+			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "LiveSplit.Server/Noesis.Javascript.dll"), Path.Combine(componentsFolder, "Noesis.Javascript.dll"), true);
+		}
+		catch (IOException ex)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine($"- Failed to install livesplit plugin. (LiveSplit is probably running?) Error : {ex.Message}");
+			Console.ResetColor();
+			Console.WriteLine($"Press any key to exit.");
+			Console.ReadKey();
+			return;
 		}
 
-		if (!File.Exists(Path.Combine(componentsFolder, "Noesis.Javascript.dll")))
-		{
-			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "LiveSplit.Server/Noesis.Javascript.dll"), Path.Combine(componentsFolder, "Noesis.Javascript.dll"));
-		}
+		Console.ForegroundColor = ConsoleColor.Green;
+		Console.WriteLine("- Done.");
+		Console.ResetColor();
 
 		Console.WriteLine($"Patching game assembly...");
 
@@ -68,26 +86,37 @@ internal class Program
 
 		if (patchedInstructions.Count == 1)
 		{
-			Console.WriteLine($"- Assembly is already patched.");
-			return;
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("- Assembly already patched.");
+			Console.ResetColor();
 		}
-
-		if (patchedInstructions.Count > 1)
+		else
 		{
-			Console.WriteLine($"Removing corrupted patch from Manager_SetSettingsFirstTime.Start.");
-			foreach (var patchedInstruction in patchedInstructions)
+			if (patchedInstructions.Count > 1)
 			{
-				instructions.Remove(patchedInstruction);
+				Console.WriteLine($"- Removing corrupted patch(es).");
+				foreach (var patchedInstruction in patchedInstructions)
+				{
+					instructions.Remove(patchedInstruction);
+				}
 			}
+
+			var newInstruction = Instruction.Create(OpCodes.Call, patcher.BuildCall(typeof(AutoSplitter.EntryPoint), "LoadMod", typeof(void), new Type[] { }));
+			instructions.Insert(0, newInstruction);
+
+			target.Instructions = instructions.ToArray();
+
+			Patch(patcher, target);
+			Save(patcher);
+
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("- Done.");
+			Console.ResetColor();
 		}
 
-		var newInstruction = Instruction.Create(OpCodes.Call, patcher.BuildCall(typeof(AutoSplitter.EntryPoint), "LoadMod", typeof(void), new Type[] { }));
-		instructions.Insert(0, newInstruction);
-
-		target.Instructions = instructions.ToArray();
-
-		Patch(patcher, target);
-		Save(patcher);
+		// keep console open
+		Console.WriteLine($"Press any key to exit.");
+		Console.ReadKey();
 	}
 
 	private static void Patch(dnpatch.Patcher patcher, Target target)
