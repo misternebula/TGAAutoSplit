@@ -157,6 +157,7 @@ namespace AutoSplitter
 
 				return;
 			}
+
 			if (!_splitForFNAF4)
 			{
 				var deactivateRoom = FindObjectOfType<FNAF4_DeactivateRoom>();

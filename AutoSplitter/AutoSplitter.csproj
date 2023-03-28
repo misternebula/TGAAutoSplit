@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\Downloads\the-glitched-attraction\The Glitched Attraction\The Glitched Attraction_Data\Managed\</OutputPath>
+    <OutputPath>..\..\..\..\Downloads\TGA Autosplitter\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

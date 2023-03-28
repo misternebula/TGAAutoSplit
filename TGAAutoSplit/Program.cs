@@ -26,7 +26,15 @@ internal class Program
 
 		Console.WriteLine($"Copying AutoSplitter mod to game folder...");
 
-		File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "AutoSplitter.dll"), Path.Combine(managedFolder, "AutoSplitter.dll"));
+		if (!File.Exists(Path.Combine(managedFolder, "AutoSplitter.dll")))
+		{
+			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "AutoSplitter.dll"), Path.Combine(managedFolder, "AutoSplitter.dll"));
+		}
+
+		if (!File.Exists(Path.Combine(managedFolder, "AutoSplitter.pdb")))
+		{
+			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "AutoSplitter.pdb"), Path.Combine(managedFolder, "AutoSplitter.pdb"));
+		}
 
 		Console.WriteLine($"Installing LiveSplit.Server...");
 
