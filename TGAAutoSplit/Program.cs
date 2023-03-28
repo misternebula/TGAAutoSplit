@@ -30,6 +30,7 @@ internal class Program
 		{
 			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "AutoSplitter.dll"), Path.Combine(managedFolder, "AutoSplitter.dll"), true);
 			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "AutoSplitter.pdb"), Path.Combine(managedFolder, "AutoSplitter.pdb"), true);
+			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "modConfig.json"), Path.Combine(managedFolder, "modConfig.json"), true);
 		}
 		catch (IOException ex)
 		{
@@ -52,8 +53,8 @@ internal class Program
 
 		try
 		{
-			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "LiveSplit.Server/LiveSplit.Server.dll"), Path.Combine(componentsFolder, "LiveSplit.Server.dll"), true);
-			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "LiveSplit.Server/Noesis.Javascript.dll"), Path.Combine(componentsFolder, "Noesis.Javascript.dll"), true);
+			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "LiveSplit.Server.dll"), Path.Combine(componentsFolder, "LiveSplit.Server.dll"), true);
+			File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "Noesis.Javascript.dll"), Path.Combine(componentsFolder, "Noesis.Javascript.dll"), true);
 		}
 		catch (IOException ex)
 		{

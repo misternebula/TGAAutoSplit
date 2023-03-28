@@ -36,7 +36,7 @@ namespace AutoSplitter
 		{
 			guiGUIStyle.fontSize = 12;
 
-			var configFile = JsonConvert.DeserializeObject<ConfigFile>(File.ReadAllText($"{Application.dataPath}/Managed/config.json"));
+			var configFile = JsonConvert.DeserializeObject<ConfigFile>(File.ReadAllText($"{Application.dataPath}/Managed/modConfig.json"));
 
 			debugMode = configFile.debugMode;
 		}
