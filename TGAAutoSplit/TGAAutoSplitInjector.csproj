@@ -31,10 +31,10 @@
     <None Update="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="LiveSplit.Server\LiveSplit.Server.dll">
+    <None Update="LiveSplit.Server.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="LiveSplit.Server\Noesis.Javascript.dll">
+    <None Update="Noesis.Javascript.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
