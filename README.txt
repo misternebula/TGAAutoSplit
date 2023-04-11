@@ -8,7 +8,7 @@ Edit the two fields to have the correct paths for the game .exe, and the livespl
 REPLACE ALL BACKSLASHES WITH FORWARD SLASHES.
 
 - Run TGAAutoSplitInjector.exe
-It should quicky copy the needed files, and close itself.
+It should copy the files needed, and patch the game assembly. It should tell you any errors if they happen.
 
 - Open LiveSplit, and edit the layout.
 Add a new component, in Control > LiveSplit Server
@@ -20,6 +20,9 @@ Add a new component, in Control > LiveSplit Server
 - Open LiveSplit, right click and go Control > Start Server
 - Open the game.
 - Enjoy!
+
+You can tell if the autosplitter installed correctly by checking the top left of the screen in the main menu - it should have some text saying the autosplitter version.
+If the text reads "AUTOSPLITTER NOT STARTED - LIVESPLIT NOT RUNNING!" then LiveSplit wasn't running when you opened the game, or the server wasn't started.
 
 The program will :
 - Start the timer when you first move.
