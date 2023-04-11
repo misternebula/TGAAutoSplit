@@ -53,7 +53,18 @@ namespace AutoSplitter
 
 			if (SceneManager.GetActiveScene().name == "Main Menu")
 			{
-				GUI.Label(new Rect(20, 10, 100, 100), "Autosplitter mod V1.2.0, by _nebula.", guiGUIStyle);
+				if (EntryPoint.socket != null)
+				{
+					GUI.Label(new Rect(20, 10, 100, 100), "Autosplitter mod V1.2.0, by _nebula.", guiGUIStyle);
+				}
+				else
+				{
+					guiGUIStyle.normal.textColor = Color.red;
+					GUI.contentColor = Color.red;
+					GUI.Label(new Rect(20, 10, 100, 100), "AUTOSPLITTER NOT STARTED - LIVESPLIT NOT RUNNING!", guiGUIStyle);
+					guiGUIStyle.normal.textColor = Color.white;
+					GUI.contentColor = Color.white;
+				}
 			}
 
 			if (debugMode)
@@ -277,17 +288,17 @@ namespace AutoSplitter
 
 		public void SendStartTimer()
 		{
-			EntryPoint.socket.Send(Encoding.UTF8.GetBytes("starttimer\r\n"));
+			EntryPoint.socket?.Send(Encoding.UTF8.GetBytes("starttimer\r\n"));
 		}
 
 		public void Split()
 		{
-			EntryPoint.socket.Send(Encoding.UTF8.GetBytes("split\r\n"));
+			EntryPoint.socket?.Send(Encoding.UTF8.GetBytes("split\r\n"));
 		}
 
 		public void Reset()
 		{
-			EntryPoint.socket.Send(Encoding.UTF8.GetBytes("reset\r\n"));
+			EntryPoint.socket?.Send(Encoding.UTF8.GetBytes("reset\r\n"));
 		}
 	}
 }

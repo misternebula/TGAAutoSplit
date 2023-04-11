@@ -28,7 +28,7 @@ namespace AutoSplitter
 			}
             catch
             {
-                return;
+                socket = null;
             }
 
             var gm = new GameObject("AUTO SPLITTER");
