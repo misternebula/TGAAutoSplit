@@ -14,21 +14,31 @@ namespace AutoSplitter
 	{
 		[JsonProperty("debugMode")]
 		public bool debugMode;
+
+		[JsonProperty("enableLobbySplit")]
+		public bool shouldLobbySplit;
+
+		[JsonProperty("enableBaseballBatSplit")]
+		public bool shouldBaseballBatSplit;
 	}
 
 	internal class AutoSplitterMod : MonoBehaviour
 	{
 		bool _isRunActive = false;
 
+		bool _splitForLobby;
 		bool _splitForFNAF4;
 		bool _splitForFNAF2;
 		bool _splitForFNAF3;
 		bool _splitForFNAFSL;
 		bool _splitForEnnard;
 		bool _splitForBackAlley;
+		bool _splitForBaseballBat;
 		bool _splitForEnd;
 
 		bool debugMode;
+		bool enableLobbySplit;
+		bool enableBaseballBatSplit;
 
 		private static readonly GUIStyle guiGUIStyle = new GUIStyle();
 
@@ -39,6 +49,8 @@ namespace AutoSplitter
 			var configFile = JsonConvert.DeserializeObject<ConfigFile>(File.ReadAllText($"{Application.dataPath}/Managed/modConfig.json"));
 
 			debugMode = configFile.debugMode;
+			enableLobbySplit = configFile.shouldLobbySplit;
+			enableBaseballBatSplit = configFile.shouldBaseballBatSplit;
 		}
 
 		public void OnGUI()
@@ -190,13 +202,16 @@ namespace AutoSplitter
 					Reset();
 				}
 
+				_splitForLobby = false;
 				_splitForFNAF4 = false;
 				_splitForFNAF2 = false;
 				_splitForFNAF3 = false;
 				_splitForFNAFSL = false;
 				_splitForEnnard = false;
 				_splitForBackAlley = false;
+				_splitForBaseballBat = false;
 				_splitForEnd = false;
+
 				_isRunActive = false;
 			}
 
@@ -213,6 +228,11 @@ namespace AutoSplitter
 				}
 
 				return;
+			}
+
+			if (!_splitForLobby && enableLobbySplit)
+			{
+
 			}
 
 			if (!_splitForFNAF4)
@@ -272,6 +292,16 @@ namespace AutoSplitter
 				{
 					Split();
 					_splitForBackAlley = true;
+				}
+			}
+
+			if (!_splitForBaseballBat && enableBaseballBatSplit)
+			{
+				var events = FindObjectOfType<Basement_PrecinematicEvents>();
+				if (events != null && events.bat.isPlaying)
+				{
+					Split();
+					_splitForBaseballBat = true;
 				}
 			}
 
