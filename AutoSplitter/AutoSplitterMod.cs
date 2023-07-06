@@ -67,7 +67,7 @@ namespace AutoSplitter
 			{
 				if (EntryPoint.socket != null)
 				{
-					GUI.Label(new Rect(20, 10, 100, 100), "Autosplitter mod V1.3.0, by _nebula.", guiGUIStyle);
+					GUI.Label(new Rect(20, 10, 100, 100), "Autosplitter mod V1.4.0, by _nebula.", guiGUIStyle);
 				}
 				else
 				{
